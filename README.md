@@ -181,6 +181,50 @@ Request
 Response
   Return status 200 and the updated user.
   
-Delete API/user/card
-  Deletes all cards for an instance of the user. 
+Delete API/user/card?userId="userId"
+  Deletes all cards for an instance of the user.
+    Request
+    ```
+{
+"id":"1234"
+}
+```    
+    Response
+      Status 200 and returns updated user. 
+  
+Delete API/user/card?userId="userId" cardId="_id"
+  Deletes specific card from database.
+  
+    Request
+    
+```
+{
+"userId":"1234"
+"cardId" : "<_id>"
+}
+```
+
+  Response
+    Return status 200 and updated user object. 
+    
+Put API/user/card?userId="userId" cardId="_id"
+    Request
+    
+```
+{
+  "name" : "Kevith Baclon",
+  "phoneNumber" : "555-867-5309",
+  "email" : "business@biz.biz",
+  "jobTitle" : "Rodeo Clown",
+  "company" : "Amazon",
+  "websites" : "[pleasegivemeajobmicrosoft.com]",
+  "skills" : "['space marine','javascript', 'CSS']",
+  _id : "<card Id>",
+  "cardJpg" : "<string of .jpg route>",
+  "userId" : "[{schema.objectId, ref: 'card'}]"
+}
+```
+   Response
+     Return status 200 and requested card object.
+      
 
