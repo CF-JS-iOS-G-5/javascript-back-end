@@ -40,7 +40,8 @@ Mock business card data.
   "websites" : "[pleasegivemeajobmicrosoft.com]",
   "skills" : "['space marine','javascript', 'CSS']",
   _id : "<card Id>",
-  "cardJpg" : "<string of .jpg route>"
+  "cardJpg" : "<string of .jpg route>",
+  "userId" : "[{schema.objectId, ref: 'card'}]"
 }
 ```
 
@@ -154,11 +155,12 @@ Enter in a user's id to remove them and all their cards from the database.
 This should remove the instance of the user.  A successful request will create a 200 response, an unsuccessful request will send a 400 response.
 
 
-###Create New Card
-##Route PUT api/user/card
-Request required in the following format
-Requires bearer authentification te be sent in the headers.
+### Create New Card
 
+Post API/user/card
+  This creates a new card for the user, and also updates the user. 
+  
+Request 
 ```
 {
   "name" : "Kevith Baclon",
@@ -168,11 +170,17 @@ Requires bearer authentification te be sent in the headers.
   "company" : "Amazon",
   "websites" : "[pleasegivemeajobmicrosoft.com]",
   "skills" : "['space marine','javascript', 'CSS']",
+  _id : "<card Id>",
+  "cardJpg" : "<string of .jpg route>",
+  "userId" : "[{schema.objectId, ref: 'card'}]"
 }
 ```
 
-*only "name" and "skills" are required
+* _id, "cardJpg" and "userId" are required. 
 
-Response 
+Response
+  Return status 200 and the updated user.
+  
+Delete API/user/card
+  Deletes all cards for an instance of the user. 
 
-###
