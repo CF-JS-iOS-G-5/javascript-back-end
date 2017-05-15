@@ -46,7 +46,7 @@ Mock business card data.
 ```
 
 ## Routes
-###POST api/user
+### POST api/user
 Creates new user.
 Uses data obtained from the GET route to the meetup api to create a new user in the database.
 
@@ -99,7 +99,7 @@ The response will look similar to this:
   }
 ``` 
 
-###PUT api/user?id
+### PUT api/user?id
 This route updates a user's information.  
 
 Enter in a user's specific ID to get the instance of that user, and allows the user to change information and save it.
@@ -144,7 +144,7 @@ After you receive the user information, you can change properties and repost the
 ``` 
 A successful PUT request will send a 200 message, an unsuccessful request will send a 400 response.
 
-###DELETE api/user?id
+### DELETE api/user?id
 This route deletes a user.  
 Enter in a user's id to remove them and all their cards from the database.
 ```
@@ -157,10 +157,10 @@ This should remove the instance of the user.  A successful request will create a
 
 ### Create New Card
 
-Post API/user/card
+### Post API/user/card
   This creates a new card for the user, and also updates the user. 
   
-Request 
+  Request 
 ```
 {
   "name" : "Kevith Baclon",
@@ -176,12 +176,12 @@ Request
 }
 ```
 
-* _id, "cardJpg" and "userId" are required. 
+*_id, "cardJpg" and "userId" are required.
 
-Response
-  Return status 200 and the updated user.
+  Response
+    Return status 200 and the updated user.
   
-Delete API/user/card?userId="userId"
+### Delete API/user/card?userId="userId"
   Deletes all cards for an instance of the user.
     Request
     ```
@@ -192,7 +192,7 @@ Delete API/user/card?userId="userId"
     Response
       Status 200 and returns updated user. 
   
-Delete API/user/card?userId="userId" cardId="_id"
+### Delete API/user/card?userId="userId" cardId="_id"
   Deletes specific card from database.
   
     Request
@@ -207,7 +207,7 @@ Delete API/user/card?userId="userId" cardId="_id"
   Response
     Return status 200 and updated user object. 
     
-Put API/user/card?userId="userId" cardId="_id"
+### Put API/user/card?userId="userId" cardId="_id"
     Request
     
 ```
