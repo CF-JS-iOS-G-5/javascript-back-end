@@ -223,3 +223,83 @@ Request:
 }
 ```
 Response: Return status 200 and requested card object.
+
+###Meet up API calls
+
+Search all events based off specific params
+
+#GET api/meetup/events?language=""&zip=""
+
+Request:
+```
+{
+  "language" : "python"
+  "zip" : "98210"
+}
+```
+
+This will be used to complete this api call as such:
+https://api.meetup.com/find/events?key=${process.env.key}&sign=true&photo-host=public&text=${language}&zip=${zip}&radius=1
+
+Response:
+
+The response will be a large JSON object that looks like this:
+```
+{
+  created: 1485402648000,
+  duration: 7200000,
+  id: "rbnxmmywhbtb",
+  name: "PyLadies Learning Circle",
+  rsvp_limit: 28,
+  status: "upcoming",
+  time: 1494898200000,
+  updated: 1494828119000,
+  utc_offset: -25200000,
+  waitlist_count: 0,
+  yes_rsvp_count: 12,
+  venue: {
+    id: 1094522,
+    name: "Starbucks",
+    lat: 47.60737228393555,
+    lon: -122.33409118652344,
+    repinned: false,
+    address_1: "1125 4th Ave, Seattle ",
+    address_2: "Fourth and Seneca",
+    city: "Seattle",
+    country: "us",
+    localized_country_name: "USA",
+    phone: "(206) 623-0860",
+    zip: "98101",
+    state: "WA"
+},
+group: {
+  created: 1350353510000,
+  name: "Seattle PyLadies",
+  id: 5411282,
+  join_mode: "open",
+  lat: 47.68000030517578,
+  lon: -122.29000091552734, 
+  urlname: "Seattle-PyLadies",
+  who: "Pythonistas"
+},
+link: "https://www.meetup.com/Seattle-PyLadies/events/239650725/",
+description: "<p>We are a group supporting each other as we learn/deepen our Python....</p> ",
+visibility: "public"
+},```
+The things you will want to use are:
+
+``` 
+res.group.id -> returns id:5411282 
+res.group.urlname -> returns "Seattle-PyLadies"
+res.link -> "https://www.meetup.com/Seattle-PyLadies/events/239650725/
+res.description -> "<description of event>"
+
+```
+Use the meet-up api docs for more information. 
+
+
+
+
+
+
+
