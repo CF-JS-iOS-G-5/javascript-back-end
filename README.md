@@ -19,9 +19,10 @@ This is the mock data the will be individual user data stored in the database us
   email: "superAwsome@aol.com",
   timeStamp: <Default date on user creation>,
   _id: <Objected created by Mongo on user signup>
-  card: "schema.id Ref'card'"
+  cards: "schema.id Ref'card'"
 }
 ``` 
+
 ### Business Card Model
 Mock business card data. 
 ```
@@ -32,7 +33,29 @@ Mock business card data.
   "jobTitle" : "Rodeo Clown",
   "company" : "Amazon",
   "websites" : "[pleasegivemeajobmicrosoft.com]",
-  "skills" : "['space marine','javascript', 'professional pirate']",
-  "cardJpg" : "<string of .jpg route>",
+  "skills" : "['space marine','javascript', 'CSS']",
+  _id : "<card Id>",
+  "cardJpg" : "<string of .jpg route>"
 }
 ```
+
+## Routes
+### Signup Route POST :/api/signup
+This is the user signup endpoint.
+The following are required to be sent with the signup route request:
+- username
+- password
+- email address
+
+Request made in JSON format:
+```
+ {"username": "guyMcAwesome", "password": <bcrypted secret password>, "email": "superAwsome@aol.com"}
+ ```
+ 
+ Username and password will be hashed to securely store.
+ The response back with be a 32 byte string jwt token that can be used for future requests. 
+```
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkdPR7de.eyJ0b2tlbiI6IjVhNTFiZmI1YTlkYzJjYzY0MGRkODljODIwZjZkZWZjY2RiMGNmOTc2NGI4YjZkYTUwNDk4NzljOGNjOWZmNDIiLCJpYXQiOjE0ODk1OTIzMjB9.vfM9xh4iFZFOU_aFpWz_z4SbTAwjbAkuRCgnyyhgnEk
+```
+
+
