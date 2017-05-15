@@ -3,7 +3,7 @@
 # TBD E-BusinessCard App name
 
 ## Group Members
-  Micheal Treat, Isak Swearingen, Disa Marnesdottr,  Lindsay Gilbert, Patrick Sheridan
+  Michael Treat, Isak Swearingen, Disa Marnesdottr,  Lindsay Gilbert, Patrick Sheridan
 
 ## Overview
 An easy to use business card app for the modern world. The initial app will use Meetup to show upcoming meetups per programming language and who is going to each. Then allows for easy business card exchange.
@@ -26,10 +26,10 @@ This is the mock data the will be individual user data stored in the database us
   "status": "active",
   "cards": [],
   }
-``` 
+```
 
 ### Business Card Model
-Mock business card data. 
+Mock business card data.
 ```
 {
   "name" : "Kevith Baclon",
@@ -64,18 +64,16 @@ Uses data obtained from the GET route to the meetup api to create a new user in 
   "status": "active",
   "cards": [],
   }
-``` 
+```
 *only objects required to create our schema is the user id.
 
-Reponse:
-
-This will send back the new user and a response 200 on a successful post and 400 on an unsuccessful one.
+Response: This will send back the new user and a response 200 on a successful post and 400 on an unsuccessful one.
 
 ### GET api/user?id
 Gets a user.
 
 Enter in the specific user id to get the instance of that user.
-Resquest should be formatted thusly:
+Request should be formatted thusly:
 ```
 {
 "id":"1234"
@@ -97,7 +95,7 @@ The response will look similar to this:
   "status": "active",
   "cards": [],
   }
-``` 
+```
 
 ### PUT api/user?id
 This route updates a user's information.  
@@ -124,7 +122,7 @@ This will retrieve the instance of that user.
   "status": "active",
   "cards": [],
   }
-``` 
+```
 After you receive the user information, you can change properties and repost the user to update it.
 
 ```{
@@ -141,7 +139,7 @@ After you receive the user information, you can change properties and repost the
   "status": "active",
   "cards": [],
   }
-``` 
+```
 A successful PUT request will send a 200 message, an unsuccessful request will send a 400 response.
 
 ### DELETE api/user?id
@@ -158,9 +156,9 @@ This should remove the instance of the user.  A successful request will create a
 ### Create New Card
 
 ### Post API/user/card
-  This creates a new card for the user, and also updates the user. 
-  
-  Request 
+This creates a new card for the user, and also updates the user.
+
+Request:
 ```
 {
   "name" : "Kevith Baclon",
@@ -178,25 +176,25 @@ This should remove the instance of the user.  A successful request will create a
 
 *_id, "cardJpg" and "userId" are required.
 
-  Response
-    Return status 200 and the updated user.
-  
+Response: Return status 200 and the updated user.
+
 ### Delete API/user/card?userId="userId"
-  Deletes all cards for an instance of the user.
-    Request
-    ```
+Deletes all cards for an instance of the user.
+Request:
+
+```
 {
 "id":"1234"
 }
 ```    
-    Response
-      Status 200 and returns updated user. 
-  
+
+Response: Status 200 and returns updated user.
+
 ### Delete API/user/card?userId="userId" cardId="_id"
   Deletes specific card from database.
-  
-    Request
-    
+
+Request:
+
 ```
 {
 "userId":"1234"
@@ -204,12 +202,12 @@ This should remove the instance of the user.  A successful request will create a
 }
 ```
 
-  Response
-    Return status 200 and updated user object. 
-    
+Response: Return status 200 and updated user object.
+
 ### Put API/user/card?userId="userId" cardId="_id"
-    Request
-    
+
+Request:
+
 ```
 {
   "name" : "Kevith Baclon",
@@ -224,7 +222,4 @@ This should remove the instance of the user.  A successful request will create a
   "userId" : "[{schema.objectId, ref: 'card'}]"
 }
 ```
-   Response
-     Return status 200 and requested card object.
-      
-
+Response: Return status 200 and requested card object.
