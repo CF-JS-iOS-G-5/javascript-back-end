@@ -2,14 +2,18 @@
 
 ### Table of contents:
 [Top](#top)
+
 [Overview](#overview)
+
 [Models](#models)
 - [User Model](#userModel)
 - [Card Model](#cardModel)
+
 [Routes](#routes)
 - [User Routes](#userRoutes)
 - [Card Routes](#cardRoutes)
 - [MUAPI Routes](#muapiRoutes)
+
 [Bottom](#bot)
 
 ## TBD E-BusinessCard App name
@@ -453,14 +457,18 @@ visibility: "public"
 
 ### Table of contents:
 [Top](#top)
+
 [Overview](#overview)
+
 [Models](#models)
 - [User Model](#userModel)
 - [Card Model](#cardModel)
+
 [Routes](#routes)
 - [User Routes](#userRoutes)
 - [Card Routes](#cardRoutes)
 - [MUAPI Routes](#muapiRoutes)
+
 [Bottom](#bot)
 
 <a name="bot"></a>
