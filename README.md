@@ -2,7 +2,7 @@
 
 Jump tabs:
 
-[Routes](https://github.com/CF-JS-iOS-G-5/javascript-back-end#routes)
+[Routes](#Routes)
 
 ## TBD E-BusinessCard App name
 
@@ -69,7 +69,7 @@ This is what an example Card would look like:
 ```
 ---
 
-## Routes
+## <a name="Routes">Routes</a>
 
 This section lists the routes that we have defined for the app. In addition, we have also defined the routes that we will be using when making calls to the meetup api.
 
