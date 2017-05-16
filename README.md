@@ -116,92 +116,81 @@ Here is an example of what a request may look like:
 
   Attached to the response object will be two useful properties: ```res.text & res.user```.
   
-  The ```res.text``` will return a status both a status code and a message. 
-  Ths ```res.user``` will return an instance of the user that was just created in the database.
+ - The ```res.text``` will return a status both a status code and a message. On success it will look like this:
+   ```200
+      Success. The User has been created in the database.
+   ```
+ - The ```res.user``` will return an instance of the user that was just created in the database. It will resemble the modeled user data listed in the models section.
   
   
-### GET api/user?id
-Gets a user.
+### GET: api/user/:id
 
-Enter in the specific user id to get the instance of that user.
-Request should be formatted thusly:
+  This route will get a specific user from the database.
+
+#### Request:
+
+```https://businesstime.herokuapp.com/api/user/123```
+
+#### Response:
+
+   Attached to the response object will be two useful properties: ```res.text & res.user```.
+  
+ - The ```res.text``` will return a status both a status code and a message. On success it will look like this:
+   ```200
+      Success. The user has been found in the database.
+   ```
+ - The ```res.user``` will return an instance of the user that was just retrieved from the database. It will resemble the modeled user data listed in the models section.
+
+### PUT api/user/:id
+
+  This route will update a user's information. The only property that cannot be updated is ```userId```.
+
+#### Request:
+
+  Url Example: ```https://businesstime.herokuapp.com/api/user/123```
+  
+  The request.body will have the properties that need to be updated. It will be sent over in JSON format:
 ```
+This is what req.body will be equal to:
+
 {
-"id":"1234"
+  "name" : "Sally",
+  "bio" : "I'm a software developer from Seattle WA!",
+  "city" : "New York", 
+  "etc",
+  "etc",
+  ......
 }
 ```
-The user will receive the requested user information and a 200 response if successful or a 404 response if not found.
-The response will look similar to this:
-```{
-  "bio": "lessis.me",
-  "city": "New York",
-  "country": "us",
-  "id": 123,
-  "joined": 1223340961000,
-  "lat": 40.77,
-  "localized_country_name": "USA",
-  "lon": -73.95,
-  "name": "Bobby Tables",
-  "state": "NY",
-  "status": "active",
-  "cards": [],
-  }
-```
 
-### PUT api/user?id
-This route updates a user's information.  
+#### Response:
 
-Enter in a user's specific ID to get the instance of that user, and allows the user to change information and save it.
-```
-{
-"id":"1234"
-}
-```
-This will retrieve the instance of that user.
+  Attached to the response object will be two useful properties: ```res.text & res.user```.
+  
+ - The ```res.text``` will return a status both a status code and a message. On success it will look like this:
+   ```201
+      Success. The user has been updated.
+   ```
+ - The ```res.user``` will return an instance of the user that was just updated in the database. It will resemble the modeled user data listed in the models section.
 
-```{
-  "bio": "lessis.me",
-  "city": "New York",
-  "country": "us",
-  "id": 123,
-  "joined": 1223340961000,
-  "lat": 40.77,
-  "localized_country_name": "USA",
-  "lon": -73.95,
-  "name": "Bobby Tables",
-  "state": "NY",
-  "status": "active",
-  "cards": [],
-  }
-```
-After you receive the user information, you can change properties and repost the user to update it.
+### DELETE api/user/:id
 
-```{
-  "bio": "lessis.me",
-  "city": "Paris",
-  "country": "fr",
-  "id": 123,
-  "joined": 1223340961000,
-  "lat": 40.77,
-  "localized_country_name": "FRA",
-  "lon": -73.95,
-  "name": "Bobby Tables",
-  "state": "NY",
-  "status": "active",
-  "cards": [],
-  }
-```
-A successful PUT request will send a 200 message, an unsuccessful request will send a 400 response.
+  This route deletes a user from the database and will also automatically hit another route to delete any cards that the user had in the database.
+  
+#### Request:
 
-### DELETE api/user?id
-This route deletes a user.  
-Enter in a user's id to remove them and all their cards from the database.
-```
-{
-"id":"1234"
-}
-```
-This should remove the instance of the user.  A successful request will create a 200 response, an unsuccessful request will send a 400 response.
+  Example Url: ```https://businesstime.herokuapp.com/api/user/123```
+  
+  No additional parameters are needed as the route will automatically look at the User's Cards and remove them from the card database and from the AWS S3 bucket.
+  
+#### Response:
+
+  Attached to the response object will be ```res.text```.
+  
+ - The ```res.text``` will return a status both a status code and a message. On success it will look like this:
+   ```201
+      Success. The user has been updated.
+   ```
 
 
 ### Create New Card
