@@ -1,15 +1,13 @@
 # javascript-back-end <a name="top"></a>
 
 ### Table of contents:
-[Top](#top)
 
-[Overview](#overview)
 
-[Models](#models)
+[Models:](#models)
 - [User Model](#userModel)
 - [Card Model](#cardModel)
 
-[Routes](#routes)
+[Routes:](#routes)
 - [User Routes](#userRoutes)
 - [Card Routes](#cardRoutes)
 - [MUAPI Routes](#muapiRoutes)
@@ -469,7 +467,6 @@ visibility: "public"
 - [Card Routes](#cardRoutes)
 - [MUAPI Routes](#muapiRoutes)
 
-[Bottom](#bot)
 
 <a name="bot"></a>
 
