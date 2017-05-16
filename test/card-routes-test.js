@@ -180,5 +180,33 @@ describe('Card route tests', function() {
       });
     });
     //add put route here
+    describe('PUT card route', function() {
+      let mockUser;
+      before(done => {
+        chai.request(server)
+        .post('/api/user')
+        .send({'name': 'triscuit', 'id': '12345'})
+        .end((err, res) => {
+          if(err) console.error(err);
+          mockUser = res.body;
+          done();
+        });
+      });
+      let mockCard;
+      before(done => {
+        chai.request(server)
+        .post(`/api/user/${mockUser._id}/card/`)
+        .send({'id': 'shoes'})
+        .end((err, res) => {
+          if(err) console.error(err);
+          expect(mockUser.mockCard.id).to.equal('shoes');
+          done();
+        });
+      });
+      describe('the entry should update', done => {
+        chai.request(server)
+        .put()
+      })
+    })
   });
 });
