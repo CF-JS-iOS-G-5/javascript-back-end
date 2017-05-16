@@ -6,32 +6,46 @@
   Michael Treat, Isak Swearingen, Disa Marnesdottr,  Lindsay Gilbert, Patrick Sheridan
 
 ## Overview
-An easy to use business card app for the modern world. The initial app will use Meetup to show upcoming meetups per programming language and who is going to each. Then allows for easy business card exchange.
+  An easy to use business card app for the modern world. The initial app will use Meetup to show upcoming meetups per programming language and who is going to each. Then allows for easy business card exchange.
 
 
 ## Models
+
 ### User Model
-This is the mock data the will be individual user data stored in the database using a correct signup route
-```{
+
+  This is what an example User object will look like in our database. When a User is made, the only property that is required to be filled out is ``` userId ``` because that is what relates a user from in meetup's Database to a user in our database. The rest can be updated or omitted as needed.
+
+```
+{
+  "userId": 123,
   "bio": "lessis.me",
   "city": "New York",
   "country": "us",
-  "id": 123,
-  "joined": 1223340961000,
   "lat": 40.77,
   "localized_country_name": "USA",
   "lon": -73.95,
   "name": "Bobby Tables",
   "state": "NY",
-  "status": "active",
   "cards": [],
-  }
+}
 ```
 
 ### Business Card Model
-Mock business card data.
+
+  A Card is a business card that the user makes and that is attached to that user. A user can have multiple cards. The 3 things that are required for this model are "_id", "cardJPG" , and "userId".
+
+```_id```     refers to this card's unique id.
+```cardJPG``` refers to the URI for the JPG image of the card.
+```userId```  refers to the userId property of the user that made this card. This is what links a card to a user.
+
+The rest of the properties can be updated or omitted as needed.
+
+This is what an example Card would look like:
 ```
 {
+  _id : "<card Id>",
+  "cardJpg" : "<string of .jpg route in AWS S3>",
+  "userId" : "[{schema.objectId, ref: 'card'}]",
   "name" : "Kevith Baclon",
   "phoneNumber" : "555-867-5309",
   "email" : "business@biz.biz",
@@ -39,36 +53,68 @@ Mock business card data.
   "company" : "Amazon",
   "websites" : "[pleasegivemeajobmicrosoft.com]",
   "skills" : "['space marine','javascript', 'CSS']",
-  _id : "<card Id>",
-  "cardJpg" : "<string of .jpg route>",
-  "userId" : "[{schema.objectId, ref: 'card'}]"
 }
 ```
 
 ## Routes
-### POST api/user
-Creates new user.
-Uses data obtained from the GET route to the meetup api to create a new user in the database.
 
-```{
+#### This section lists the routes that we have defined for the app.
+
+In addition we have also defined the routes that we will be using when making calls to the meetup api.
+
+
+This section is broken into 3 parts:
+
+
+##### User routes 
+- These are routes that will interact with the User objects in the database.
+
+##### Card routes 
+- These are the routes that will interact with the Card objects in the database. 
+
+- Some of these routes will also interact with the User database, for example the PUT or DELETE routes will also need to update the User in the user database to reflect the changes.
+
+##### Meetup API routes (MUAPI) 
+- These are the routes that will be used when interacting with the MUAPI.
+- Some of these routes will interact with User objects 
+
+
+
+## User routes
+
+### POST api/user
+
+  This route will create a new User. This will take the data we get back from the meetup api about the user that has just signed in using OAuth.
+
+  The only required property is ```{"userId" : "123"}``` as that property is what relates the user from the meetup database to a user in our database. Other properties about the User can change in the meetup database or in our User database without breaking the references between the two databases since the userId property will never be changed in either database.
+
+Here is an example of what a request may look like:
+
+#### Request:
+
+```
+{
+  "userId": 123,
   "bio": "lessis.me",
   "city": "New York",
   "country": "us",
-  "id": 123,
-  "joined": 1223340961000,
   "lat": 40.77,
   "localized_country_name": "USA",
   "lon": -73.95,
   "name": "Bobby Tables",
   "state": "NY",
-  "status": "active",
   "cards": [],
-  }
+}
 ```
-*only objects required to create our schema is the user id.
 
-Response: This will send back the new user and a response 200 on a successful post and 400 on an unsuccessful one.
+#### Response:
 
+  Attached to the response object will be two useful properties: ```res.text & res.user```.
+  
+  The ```res.text``` will return a status both a status code and a message. 
+  Ths ```res.user``` will return an instance of the user that was just created in the database.
+  
+  
 ### GET api/user?id
 Gets a user.
 
