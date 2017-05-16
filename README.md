@@ -347,7 +347,7 @@ This is what req.body will be equal to:
 
   These are all the routes we use to make requests from the MUAPI. Please look at the [MUAPI docs](https://secure.meetup.com/meetup_api) for more information on the types of parametes you can send on our routes.
   
-### GET: api/meetup/events?text=""
+### GET: api/meetup/events?text="" <a name="api/events"></a>
 
   This route will get all of the meetup events that match the specified programming language. This looks at 30 mile radius around Seattle, WA.
   
@@ -458,7 +458,53 @@ visibility: "public"
 },
 
 ```
+#### Response.status:
 
+- The ```res.text``` will have a status code and a message. On success it will look like this:
+   ```
+      200
+      Success.
+   ```
+- The response.events will be an array of event objects.
+
+### GET: api/meetup/event?urlname="urlname"&eventId="eventId"
+
+  This will return the attendees who have sent in a "yes" rsvp. ( Meaning they are going to the event)
+  Note - the route here is ```/event```. No 's'.
+    
+#### Request:
+  
+  ```https://businesstime.herokuapp.com/api/meetup/event?urlname="Casual-Kayaking-Meetup"&eventId="239969305"```
+  
+  The parameters ```urlname``` and ```eventId``` are 2 properties that are attached to a specific event object that is received from the ```api/meetup/events``` route. See the [above section](#api/events) for more information.
+ 
+#### Response:
+
+ - The ```res.text``` will have a status code and a message. On success it will look like this:
+   ```
+      200
+      Success.
+   ```
+- The response.attendees will be an array containing instances of attendee objects. 
+
+#### Example response.attendees[0]:
+  This is an example of a specific attendee object.
+```
+{
+
+ "id": 123412341234124,
+ "name": "Heidi B",
+ "bio": "Yay I'm a bio",
+ "photo": {
+   "id": 9876543210,
+   "highres_link": "https://secure.meetupstatic.com/photos/member/4/5/9/c/highres_9876543210.jpeg",
+   "photo_link": "https://secure.meetupstatic.com/photos/member/4/5/9/c/member_9876543210.jpeg",
+   "thumb_link": "https://secure.meetupstatic.com/photos/member/4/5/9/c/thumb_9876543210.jpeg",
+   "type": "member",
+   "base_url": "https://secure.meetupstatic.com" 
+  }
+},
+```
 ### Table of contents:
 
 [Models:](#models)
