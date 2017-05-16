@@ -13,10 +13,9 @@ const cardSchema = Schema({
   company: {type: String, max: 50},
   websites: {type: String, max: 200},
   skills: {type: Array, required: true},
-  _id : {type: String, required: true},
-  cardJpg: {type: String},
-  userId: [{schema.objectId, ref: 'aUser'}]
-})
+  imageURI: {type: String, required: true, unique: true},
+  userId: {type: Schema.Types.ObjectId, required: true},
+});
 
 const Card = module.exports = mongoose.model('card', cardSchema);
 
