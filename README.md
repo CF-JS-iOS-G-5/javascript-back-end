@@ -1,4 +1,18 @@
-# javascript-back-end <a name="top"></a>
+# Business Time - Backend Docs <a name="top"></a>
+
+### Group Members
+  [Michael Treat](https://github.com/michaeltreat)<br>
+  [Isak Swearingen](https://github.com/renegadellama)<br>
+  [Disa Marnesdottr](https://github.com/justdisa)<br>
+  [Lindsay Gilbert](https://github.com/lindsgil)<br>
+  [Patrick Sheridan](https://github.com/sheridp2)<br>
+
+---
+
+## <a name="overview">Overview</a>
+  Business Time is an easy to use business card app for the modern world. The initial app will use Meetup to show upcoming meetups per programming language and who is going to each event. It also allows for easy digital business card creation and sharing.
+
+--- 
 
 ### Table of contents:
 
@@ -14,17 +28,6 @@
 
 [Bottom](#bot)
 
-## TBD E-BusinessCard App name
-
-### Group Members
-  Michael Treat, Isak Swearingen, Disa Marnesdottr,  Lindsay Gilbert, Patrick Sheridan
-
----
-
-## <a name="overview">Overview</a>
-  An easy to use business card app for the modern world. The initial app will use Meetup to show upcoming meetups per programming language and who is going to each. Then allows for easy business card exchange.
-
----
 
 ## <a name="models">Models</a>
 
@@ -454,20 +457,14 @@ visibility: "public"
 },```
 
 ### Table of contents:
-[Top](#top)
 
-[Overview](#overview)
-
-[Models](#models)
+[Models:](#models)
 - [User Model](#userModel)
 - [Card Model](#cardModel)
 
-[Routes](#routes)
+[Routes:](#routes)
 - [User Routes](#userRoutes)
 - [Card Routes](#cardRoutes)
 - [MUAPI Routes](#muapiRoutes)
 
-
-<a name="bot"></a>
-
-
+[Top](#top) <a name="bot"></a>
