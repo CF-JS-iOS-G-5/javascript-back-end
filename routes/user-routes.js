@@ -1,7 +1,7 @@
 'use strict';
 
 const debug = require('debug')('bizapp:user-routes');
-const userController = require('../controllers/userController');
+const userController = require('../controllers/user-controller');
 const createError = require('http-errors');
 
 module.exports = function(router){
