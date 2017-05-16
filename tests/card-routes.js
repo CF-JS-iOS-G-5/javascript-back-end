@@ -70,7 +70,6 @@ describe('Card route tests', function() {
           done();
         });
       });
-      
-    })
-  })
-})
+    });
+  });
+});
