@@ -388,7 +388,8 @@ This is what req.body will be equal to:
   ```event.venue.address_1
      event.venue.address_2
      event.venue.city
-     event.venue.zip``` 
+     event.venue.zip
+  ``` 
      
   This is the phone number of the venue:
   ```event.venue.phone```
@@ -412,7 +413,7 @@ This is what req.body will be equal to:
  
   This is and example of what an event object will look like. The shortcuts above map the same as shown below.
  
- ```
+```
 notes are next to each important key:value pairs
 {
   created: 1485402648000,
@@ -452,9 +453,11 @@ group: {
   who: "Pythonistas"
 },
 link: "https://www.meetup.com/Seattle-PyLadies/events/239650725/",  <-- Link to the group's website.
-description: "<p>We are a group supporting each other as we learn/deepen our Python....</p> ", res.
+description: "<p>We are a group supporting each other as we learn/deepen our Python....</p> ",
 visibility: "public"
-},```
+},
+
+```
 
 ### Table of contents:
 
