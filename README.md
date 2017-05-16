@@ -327,14 +327,14 @@ This is what req.body will be equal to:
 
 ## Meet-up API calls (MUAPI)
 
-  These are all the routes we use to make requests from the MUAPI. Please look at the MUAPI [docs link](https://secure.meetup.com/meetup_api) for more information on the types of parametes you can send on our routes.
+  These are all the routes we use to make requests from the MUAPI. Please look at the [MUAPI docs](https://secure.meetup.com/meetup_api) for more information on the types of parametes you can send on our routes.
   
 ### GET: api/meetup/events?text=""
 
   This route will get all of the meetup events that match the specified programming language. This looks at 30 mile radius around Seattle, WA.
   
   
-  This route will hit the ```https://api.meetup.com/find/events``` route on the MUAPI. For more info on the ```/find/events``` route on the MUAPI click [here link](https://secure.meetup.com/meetup_api/console/?path=%2Ffind%2Fevents) 
+  This route will hit the ```https://api.meetup.com/find/events``` route on the MUAPI. For more info on the ```/find/events``` route on the MUAPI docs click [here](https://secure.meetup.com/meetup_api/console/?path=%2Ffind%2Fevents).
   
   The value of the "text" key should be the name of a programming language.
 
@@ -354,31 +354,41 @@ This is what req.body will be equal to:
   
   Here are also some quick shortcuts to find some of the more useful specific properties:
   
+  Save typing:
   ```let event = response.events[0]```
   
-  ```event.venue.name``` Is the name of the location
+  This is the name of the location:
+  ```event.venue.name```
   
+  These are the lat and lon properties:
   ```
      event.venue.lat
-     event.venue.lon``` These are the lat and lon properties.
+     event.venue.lon
+  ```
   
+  These add up to create the whole address of the location:
   ```event.venue.address_1
      event.venue.address_2
      event.venue.city
-     event.venue.zip``` These add up to create the whole address of the location
-
-  ```event.venue.phone``` This is the phone number of the venue.
+     event.venue.zip``` 
+     
+  This is the phone number of the venue:
+  ```event.venue.phone```
   
-  ```event.group.name``` This is the name of the event.
-  ```event.link``` This is a link to the event's webpage.
+  This is the name of the event and a link to the website on Meetup:
+  ```
+     event.group.name
+     event.link
+  ``` 
   
   ##### IMPORTANT :
-    Here are two key:value pairs that are very important to know:
+  
+  These two properties will be used in other routes to make a detailed requests for rsvp data:
+    ```
+    event.group.urlname    
+    event.group.id
+    ``` 
     
-    
-    ``` event.group.urlname``` This is the urlname ofthe event. This will be used when making a request to a specific event.
-    
-    ``` event.group.id``` This is the id of the event. This will be used later when making a request to a specific event.
     
  ##### Response.event[0]
  
