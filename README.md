@@ -1,8 +1,16 @@
-# javascript-back-end
+# javascript-back-end <a name="top"></a>
 
-Jump tabs:
-
-[Routes](#Routes)
+### Table of contents:
+[Top](#top)
+[Overview](#overview)
+[Models](#models)
+- [User Model](#userModel)
+- [Card Model](#cardModel)
+[Routes](#routes)
+- [User Routes](#userRoutes)
+- [Card Routes](#cardRoutes)
+- [MUAPI Routes](#muapiRoutes)
+[Bottom](#bot)
 
 ## TBD E-BusinessCard App name
 
@@ -11,13 +19,14 @@ Jump tabs:
 
 ---
 
-## Overview
+## <a name="overview">Overview</a>
   An easy to use business card app for the modern world. The initial app will use Meetup to show upcoming meetups per programming language and who is going to each. Then allows for easy business card exchange.
 
 ---
-## Models
 
-### User Model
+## <a name="models">Models</a>
+
+### <a name="userModel">User Model</a>
 
   This is what an example User object will look like in our database. When a User is made, the only property that is required to be filled out is ``` userId ``` because that is what relates a user from Meetup's database to a user in our database. The other properties can be updated or omitted as needed.
   
@@ -40,7 +49,7 @@ Jump tabs:
 
 
 
-### Business Card Model
+### <a name="cardModel">Business Card Model</a>
 
   A Card is a business card that the user makes and that is attached to that user, and a user can have multiple cards. The 3 things that are required for this model are ```_id```,```cardJPG```, and ```userId```.
 
@@ -91,7 +100,7 @@ This section lists the routes that we have defined for the app. In addition, we 
 
 ---
 
-## User routes
+## <a name="userRoutes">User routes</a>
 
 ### POST: api/user
 
@@ -207,7 +216,7 @@ This is what req.body will be equal to:
    ```
 ---
 
-## Card Routes
+## <a name="cardRoutes">Card Routes</a>
 
 ### POST: api/user/:userId/card
 
@@ -329,7 +338,7 @@ This is what req.body will be equal to:
  
  ---
 
-## Meet-up API calls (MUAPI)
+## <a name="muapiRoutes">Meet-up API calls (MUAPI)</a>
 
   These are all the routes we use to make requests from the MUAPI. Please look at the [MUAPI docs](https://secure.meetup.com/meetup_api) for more information on the types of parametes you can send on our routes.
   
@@ -442,9 +451,18 @@ description: "<p>We are a group supporting each other as we learn/deepen our Pyt
 visibility: "public"
 },```
 
+### Table of contents:
+[Top](#top)
+[Overview](#overview)
+[Models](#models)
+- [User Model](#userModel)
+- [Card Model](#cardModel)
+[Routes](#routes)
+- [User Routes](#userRoutes)
+- [Card Routes](#cardRoutes)
+- [MUAPI Routes](#muapiRoutes)
+[Bottom](#bot)
 
-
-
-
+<a name="bot"></a>
 
 
