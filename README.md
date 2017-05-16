@@ -1,19 +1,21 @@
 # javascript-back-end
 
-# TBD E-BusinessCard App name
+## TBD E-BusinessCard App name
 
-## Group Members
+### Group Members
   Michael Treat, Isak Swearingen, Disa Marnesdottr,  Lindsay Gilbert, Patrick Sheridan
+
+---
 
 ## Overview
   An easy to use business card app for the modern world. The initial app will use Meetup to show upcoming meetups per programming language and who is going to each. Then allows for easy business card exchange.
 
-
+---
 ## Models
 
 ### User Model
 
-  This is what an example User object will look like in our database. When a User is made, the only property that is required to be filled out is ``` userId ``` because that is what relates a user from in meetup's Database to a user in our database. The rest can be updated or omitted as needed.
+  This is what an example User object will look like in our database. When a User is made, the only property that is required to be filled out is ``` userId ``` because that is what relates a user from Meetup's database to a user in our database. The other properties can be updated or omitted as needed.
 
 ```
 {
@@ -30,15 +32,19 @@
 }
 ```
 
+
+
 ### Business Card Model
 
-  A Card is a business card that the user makes and that is attached to that user. A user can have multiple cards. The 3 things that are required for this model are "_id", "cardJPG" , and "userId".
+  A Card is a business card that the user makes and that is attached to that user, and a user can have multiple cards. The 3 things that are required for this model are ```_id```,```cardJPG```, and ```userId```.
 
 ```_id```     refers to this card's unique id.
 ```cardJPG``` refers to the URI for the JPG image of the card.
 ```userId```  refers to the userId property of the user that made this card. This is what links a card to a user.
 
 The rest of the properties can be updated or omitted as needed.
+
+
 
 This is what an example Card would look like:
 ```
@@ -55,15 +61,14 @@ This is what an example Card would look like:
   "skills" : "['space marine','javascript', 'CSS']",
 }
 ```
+---
 
 ## Routes
 
-#### This section lists the routes that we have defined for the app.
-
-In addition we have also defined the routes that we will be using when making calls to the meetup api.
+This section lists the routes that we have defined for the app. In addition, we have also defined the routes that we will be using when making calls to the meetup api.
 
 
-This section is broken into 3 parts:
+### This section is broken into 3 parts:
 
 
 ##### User routes 
@@ -78,11 +83,11 @@ This section is broken into 3 parts:
 - These are the routes that will be used when interacting with the MUAPI.
 - Some of these routes will interact with User objects 
 
-
+---
 
 ## User routes
 
-### POST api/user
+### POST: api/user
 
   This route will create a new User. This will take the data we get back from the meetup api about the user that has just signed in using OAuth.
 
