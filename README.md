@@ -122,12 +122,12 @@ The request.body would look similar to this. Only "userId" is required, and it m
 
   Attached to the response object will be two useful properties: ```res.text & res.user```.
   
- - The ```res.text``` will return a status both a status code and a message. On success it will look like this:
+ - The ```res.text``` will have a status code and a message. On success it will look like this:
    ```
       200
       Success. The User has been created in the database.
    ```
- - The ```res.user``` will return an instance of the user that was just created in the database. It will resemble the modeled user data listed in the models section.
+ - The ```res.user``` will be an instance of the user that was just created in the database. It will resemble the modeled user data listed in the models section.
   
   
 ### GET: api/user/:userId
@@ -142,12 +142,12 @@ The request.body would look similar to this. Only "userId" is required, and it m
 
    Attached to the response object will be two useful properties: ```res.text & res.user```.
   
- - The ```res.text``` will return a status both a status code and a message. On success it will look like this:
+ - The ```res.text``` will have a status code and a message. On success it will look like this:
    ```
       200
       Success. The user has been found in the database.
    ```
- - The ```res.user``` will return an instance of the user that was just retrieved from the database. It will resemble the modeled user data listed in the models section.
+ - The ```res.user``` will be an instance of the user that was just retrieved from the database. It will resemble the modeled user data listed in the models section.
 
 ### PUT: api/user/:userId
 
@@ -175,12 +175,12 @@ This is what req.body will be equal to:
 
   Attached to the response object will be two useful properties: ```res.text & res.user```.
   
- - The ```res.text``` will return a status both a status code and a message. On success it will look like this:
+ - The ```res.text``` will have a status code and a message. On success it will look like this:
    ```
       201
       Success. The user has been updated.
    ```
- - The ```res.user``` will return an instance of the user that was just updated in the database. It will resemble the modeled user data listed in the models section.
+ - The ```res.user``` will be an instance of the user that was just updated in the database. It will resemble the modeled user data listed in the models section.
 
 ### DELETE: api/user/:userId
 
@@ -196,7 +196,7 @@ This is what req.body will be equal to:
 
   Attached to the response object will be ```res.text```.
   
- - The ```res.text``` will return a status both a status code and a message. On success it will look like this:
+ - The ```res.text``` will have a status code and a message. On success it will look like this:
    ```
       204
       Success. The user and their cards have been deleted from the database and removed from the S3 bucket respectivly.
@@ -208,7 +208,7 @@ This is what req.body will be equal to:
 ### POST: api/user/:userId/card
 
   This route will create a new Card and will store the JPG image of the Card in the AWS S3 bucket.
-  - ### IMPORTANT: ###### this will also automatically update ```user.cards``` by pushing ```_id``` into the array.
+  - ### IMPORTANT: this will also automatically update ```user.cards``` by pushing ```_id``` into the array.
 
 #### Request:
 
@@ -236,13 +236,13 @@ This is what req.body will be equal to:
 
  Attached to the response object will be three useful properties: ```res.text```, ```res.user```, and ``` res.card```.
   
- - The ```res.text``` will return a status both a status code and a message. On success it will look like this:
+ - The ```res.text``` will have a status code and a message. On success it will look like this:
    ```
       201
       Success. The Card has been added to the database.
    ```
- - The ```res.user``` will return an instance of the user that has been updated with the new Card added to ```user.cards``` It will resemble the modeled user data listed in the models section.
- - the ```res.card``` will return the card that was just made. It is equal to ```user.card[`${indexOfNewlyCreatedCard}`]```.
+ - The ```res.user``` will be an instance of the user that has been updated with the new Card added to ```user.cards``` It will resemble the modeled user data listed in the models section.
+ - the ```res.card``` will be an instance of the card that was just made. It is equivalant to ```user.card[indexOfNewCard]```.
   
 
 
@@ -262,12 +262,12 @@ This is what req.body will be equal to:
 
  Attached to the response object will be two useful properties: ```res.text & res.user```.
   
- - The ```res.text``` will return a status both a status code and a message. On success it will look like this:
+ - The ```res.text``` will have a status code and a message. On success it will look like this:
    ```
       201
       Success. All of the user's cards have been removed from the database and removed from the AWS S3 bucket.
    ```
- - The ```res.user``` will return an instance of the user that has been updated. It should now have ```user.cards === []``` The rest of the object will resemble the modeled user data listed in the models section.
+ - The ```res.user``` will be an instance of the user that has been updated. It should now have ```user.cards === []``` The rest of the object will resemble the modeled user data listed in the models section.
 
 
 ### DELETE: api/user/:userId/card/:cardId
@@ -277,53 +277,115 @@ This is what req.body will be equal to:
 #### Request:
   ```https://businesstime.herokuapp.com/api/user/123/card/102949```
 
-  No other parameters are required as this will automaticall delete the card from the database, remove it from the S3 bucket, and update ```user.cards``` to refelct the card having been removed.
+  No other parameters are required as this will automatically delete the card from the database, remove it from the S3 bucket, and update ```user.cards``` to refelect the card having been removed.
 
 #### Response: 
 
+  Attached to the response object will be two useful properties: ```res.text & res.user```.
+  
+ - The ```res.text``` will have a status code and a message. On success it will look like this:
+   ```
+      201
+      Success. The specific card has been removed from the database, the AWS S3 bucket, and user.cards has been updated.
+   ```
+ - The ```res.user``` will be an instance of the user that has been updated. ```user.cards``` should no longer include the specific card. The rest of the object will resemble the modeled user data listed in the models section.
 
+### PUT: api/user/:userId/card/:cardId
 
-### Put API/user/card?userId="userId" cardId="_id"
+  This route will allow a user to update a card. Cannot update ```_id``` and ```userId```.
 
-Request:
-
+#### Request:
+  
+  ```https://businesstime.herokuapp.com/api/user/123/card/102949```
+ 
+ The request.body should look similar to this:
 ```
 {
-  "name" : "Kevith Baclon",
-  "phoneNumber" : "555-867-5309",
-  "email" : "business@biz.biz",
-  "jobTitle" : "Rodeo Clown",
-  "company" : "Amazon",
-  "websites" : "[pleasegivemeajobmicrosoft.com]",
-  "skills" : "['space marine','javascript', 'CSS']",
-  _id : "<card Id>",
   "cardJpg" : "<string of .jpg route>",
-  "userId" : "[{schema.objectId, ref: 'card'}]"
+  "name" : "Kevin Bacon",
+  "phoneNumber" : "425-555-5309",
+  "email" : "business@biznes.biz",
+  "jobTitle" : "Circus Clown",
+  "company" : "Amazonia",
+  "websites" : "[]",
+  "skills" : "['space marine','javascript', 'CSS']",
 }
 ```
-Response: Return status 200 and requested card object.
+#### Response:
 
-###Meet up API calls
+ Attached to the response object will be three useful properties: ```res.text```, ```res.user```, and ``` res.card```.
+  
+ - The ```res.text``` will have a status code and a message. On success it will look like this:
+   ```
+      201
+      Success. The Card has been update.
+   ```
+ - The ```res.user``` will be an instance of the user. Note, this route does NOT update the user property as no card has been added or removed from ```user.cards```. Only the _Card_ that ```user.cards[indexOfUpdatedCard]``` **_references_** will change. The rest of the User object will resemble the modeled user data listed in the models section.
+ - the ```res.card``` will be an instance of the card that was just updated. It is equivalant to ```user.card[indexOfUpdatedCard]```.
+ 
+ ---
 
-Search all events based off specific params
+## Meet-up API calls (MUAPI)
 
-#GET api/meetup/events?language=""&zip=""
+  These are all the routes we use to make requests from the MUAPI. Please look at the MUAPI [docs link](https://secure.meetup.com/meetup_api) for more information on the types of parametes you can send on our routes.
+  
+### GET: api/meetup/events?text=""
 
-Request:
-```
-{
-  "language" : "python"
-  "zip" : "98210"
-}
-```
+  This route will get all of the meetup events that match the specified programming language. This looks at 30 mile radius around Seattle, WA.
+  
+  
+  This route will hit the ```https://api.meetup.com/find/events``` route on the MUAPI. For more info on the ```/find/events``` route on the MUAPI click [here link](https://secure.meetup.com/meetup_api/console/?path=%2Ffind%2Fevents) 
+  
+  The value of the "text" key should be the name of a programming language.
 
-This will be used to complete this api call as such:
-https://api.meetup.com/find/events?key=${process.env.key}&sign=true&photo-host=public&text=${language}&zip=${zip}&radius=1
+#### Request:
 
-Response:
+  ```https://businesstime.herokuapp.com/api/meetup/events?text="python"```
+  
+  Additional paramaters may be added to refine the search.
+  
+#### Response:
 
-The response will be a large JSON object that looks like this:
-```
+  The response will be an array containing all the event results that are returned.
+  
+  Here is the syntax to find some property for a specific event:
+  
+  ```response.events[i].someProperty``` 
+  
+  Here are also some quick shortcuts to find some of the more useful specific properties:
+  
+  ```let event = response.events[0]```
+  
+  ```event.venue.name``` Is the name of the location
+  
+  ```
+     event.venue.lat
+     event.venue.lon``` These are the lat and lon properties.
+  
+  ```event.venue.address_1
+     event.venue.address_2
+     event.venue.city
+     event.venue.zip``` These add up to create the whole address of the location
+
+  ```event.venue.phone``` This is the phone number of the venue.
+  
+  ```event.group.name``` This is the name of the event.
+  ```event.link``` This is a link to the event's webpage.
+  
+  ##### IMPORTANT :
+    Here are two key:value pairs that are very important to know:
+    
+    
+    ``` event.group.urlname``` This is the urlname ofthe event. This will be used when making a request to a specific event.
+    
+    ``` event.group.id``` This is the id of the event. This will be used later when making a request to a specific event.
+    
+ ##### Response.event[0]
+ 
+  This is and example of what an event object will look like. The shortcuts above map the same as shown below.
+ 
+ ```
+notes are next to each important key:value pairs
 {
   created: 1485402648000,
   duration: 7200000,
@@ -338,43 +400,33 @@ The response will be a large JSON object that looks like this:
   yes_rsvp_count: 12,
   venue: {
     id: 1094522,
-    name: "Starbucks",
-    lat: 47.60737228393555,
+    name: "Starbucks",   <-- Name of the location the event is held.
+    lat: 47.60737228393555,  <-- GPS coords.
     lon: -122.33409118652344,
     repinned: false,
-    address_1: "1125 4th Ave, Seattle ",
+    address_1: "1125 4th Ave, Seattle ",  <-- Address of location
     address_2: "Fourth and Seneca",
     city: "Seattle",
     country: "us",
     localized_country_name: "USA",
-    phone: "(206) 623-0860",
+    phone: "(206) 623-0860",  <--- Phone Number of venue
     zip: "98101",
     state: "WA"
 },
 group: {
   created: 1350353510000,
-  name: "Seattle PyLadies",
-  id: 5411282,
+  name: "Seattle PyLadies",  <-- Name of the group.
+  id: 5411282,  <-- IMPORTANT!! This is the id of the event!
   join_mode: "open",
   lat: 47.68000030517578,
   lon: -122.29000091552734, 
-  urlname: "Seattle-PyLadies",
+  urlname: "Seattle-PyLadies",  <-- IMPORTANT!! This is the urlname of the event!
   who: "Pythonistas"
 },
-link: "https://www.meetup.com/Seattle-PyLadies/events/239650725/",
-description: "<p>We are a group supporting each other as we learn/deepen our Python....</p> ",
+link: "https://www.meetup.com/Seattle-PyLadies/events/239650725/",  <-- Link to the group's website.
+description: "<p>We are a group supporting each other as we learn/deepen our Python....</p> ", res.
 visibility: "public"
 },```
-The things you will want to use are:
-
-``` 
-res.group.id -> returns id:5411282 
-res.group.urlname -> returns "Seattle-PyLadies"
-res.link -> "https://www.meetup.com/Seattle-PyLadies/events/239650725/
-res.description -> "<description of event>"
-
-```
-Use the meet-up api docs for more information. 
 
 
 
