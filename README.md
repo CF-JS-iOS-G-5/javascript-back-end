@@ -16,10 +16,13 @@
 ### User Model
 
   This is what an example User object will look like in our database. When a User is made, the only property that is required to be filled out is ``` userId ``` because that is what relates a user from Meetup's database to a user in our database. The other properties can be updated or omitted as needed.
+  
+  The user will also have a property ```user.cards``` that will be added when the user is made. This is defaulted to an empty array that will later be filled with references to the User's Cards that they have made.
 
 ```
 {
   "userId": 123,
+  "cards": [],
   "bio": "lessis.me",
   "city": "New York",
   "country": "us",
@@ -28,7 +31,6 @@
   "lon": -73.95,
   "name": "Bobby Tables",
   "state": "NY",
-  "cards": [],
 }
 ```
 
@@ -89,15 +91,20 @@ This section lists the routes that we have defined for the app. In addition, we 
 
 ### POST: api/user
 
+
   This route will create a new User. This will take the data we get back from the meetup api about the user that has just signed in using OAuth.
 
-  The only required property is ```{"userId" : "123"}``` as that property is what relates the user from the meetup database to a user in our database. Other properties about the User can change in the meetup database or in our User database without breaking the references between the two databases since the userId property will never be changed in either database.
+  The only property that is required on the request is ```{"userId" : "123"}``` as that property is what relates the user from the meetup database to a user in our database. Other properties about the User can change in the meetup database or in our User database without breaking the references between the two databases since the userId property will never be changed in either database.
 
 Here is an example of what a request may look like:
 
 #### Request:
 
+```https://businesstime.herokuapp.com/api/user```
+
+The request.body would look similar to this. Only "userId" is required, and it must match what the userId that was received from the Meetup api when the user logged in.
 ```
+
 {
   "userId": 123,
   "bio": "lessis.me",
@@ -108,7 +115,6 @@ Here is an example of what a request may look like:
   "lon": -73.95,
   "name": "Bobby Tables",
   "state": "NY",
-  "cards": [],
 }
 ```
 
@@ -117,13 +123,14 @@ Here is an example of what a request may look like:
   Attached to the response object will be two useful properties: ```res.text & res.user```.
   
  - The ```res.text``` will return a status both a status code and a message. On success it will look like this:
-   ```200
+   ```
+      200
       Success. The User has been created in the database.
    ```
  - The ```res.user``` will return an instance of the user that was just created in the database. It will resemble the modeled user data listed in the models section.
   
   
-### GET: api/user/:id
+### GET: api/user/:userId
 
   This route will get a specific user from the database.
 
@@ -136,20 +143,21 @@ Here is an example of what a request may look like:
    Attached to the response object will be two useful properties: ```res.text & res.user```.
   
  - The ```res.text``` will return a status both a status code and a message. On success it will look like this:
-   ```200
+   ```
+      200
       Success. The user has been found in the database.
    ```
  - The ```res.user``` will return an instance of the user that was just retrieved from the database. It will resemble the modeled user data listed in the models section.
 
-### PUT api/user/:id
+### PUT: api/user/:userId
 
   This route will update a user's information. The only property that cannot be updated is ```userId```.
 
 #### Request:
 
-  Url Example: ```https://businesstime.herokuapp.com/api/user/123```
+  ```https://businesstime.herokuapp.com/api/user/123```
   
-  The request.body will have the properties that need to be updated. It will be sent over in JSON format:
+  The ```request.body``` will have the properties that need to be updated. It will be sent over in JSON format:
 ```
 This is what req.body will be equal to:
 
@@ -168,18 +176,19 @@ This is what req.body will be equal to:
   Attached to the response object will be two useful properties: ```res.text & res.user```.
   
  - The ```res.text``` will return a status both a status code and a message. On success it will look like this:
-   ```201
+   ```
+      201
       Success. The user has been updated.
    ```
  - The ```res.user``` will return an instance of the user that was just updated in the database. It will resemble the modeled user data listed in the models section.
 
-### DELETE api/user/:id
+### DELETE: api/user/:userId
 
   This route deletes a user from the database and will also automatically hit another route to delete any cards that the user had in the database.
   
 #### Request:
 
-  Example Url: ```https://businesstime.herokuapp.com/api/user/123```
+  ```https://businesstime.herokuapp.com/api/user/123```
   
   No additional parameters are needed as the route will automatically look at the User's Cards and remove them from the card database and from the AWS S3 bucket.
   
@@ -188,19 +197,29 @@ This is what req.body will be equal to:
   Attached to the response object will be ```res.text```.
   
  - The ```res.text``` will return a status both a status code and a message. On success it will look like this:
-   ```201
-      Success. The user has been updated.
    ```
+      204
+      Success. The user and their cards have been deleted from the database and removed from the S3 bucket respectivly.
+   ```
+---
 
+## Card Routes
 
-### Create New Card
+### POST: api/user/:userId/card
 
-### Post API/user/card
-This creates a new card for the user, and also updates the user.
+  This route will create a new Card and will store the JPG image of the Card in the AWS S3 bucket.
+  - ### IMPORTANT: ###### this will also automatically update ```user.cards``` by pushing ```_id``` into the array.
 
-Request:
+#### Request:
+
+  ```https://businesstime.herokuapp.com/api/user/123/card```
+
+  This is what the ```request.body``` would look like. The only required properties are ```_id```,```cardJPG```, and ```userId```. **** see note on bottom.
 ```
 {
+  _id : "<card Id>",
+  "cardJpg" : "<string of .jpg route>",
+  "userId" : "[{schema.objectId, ref: 'card'}]",
   "name" : "Kevith Baclon",
   "phoneNumber" : "555-867-5309",
   "email" : "business@biz.biz",
@@ -208,41 +227,61 @@ Request:
   "company" : "Amazon",
   "websites" : "[pleasegivemeajobmicrosoft.com]",
   "skills" : "['space marine','javascript', 'CSS']",
-  _id : "<card Id>",
-  "cardJpg" : "<string of .jpg route>",
-  "userId" : "[{schema.objectId, ref: 'card'}]"
 }
 ```
 
 *_id, "cardJpg" and "userId" are required.
 
-Response: Return status 200 and the updated user.
+#### Response: 
 
-### Delete API/user/card?userId="userId"
-Deletes all cards for an instance of the user.
-Request:
+ Attached to the response object will be three useful properties: ```res.text```, ```res.user```, and ``` res.card```.
+  
+ - The ```res.text``` will return a status both a status code and a message. On success it will look like this:
+   ```
+      201
+      Success. The Card has been added to the database.
+   ```
+ - The ```res.user``` will return an instance of the user that has been updated with the new Card added to ```user.cards``` It will resemble the modeled user data listed in the models section.
+ - the ```res.card``` will return the card that was just made. It is equal to ```user.card[`${indexOfNewlyCreatedCard}`]```.
+  
 
-```
-{
-"id":"1234"
-}
-```    
 
-Response: Status 200 and returns updated user.
+**** ( DEVNOTE * these may not actually be required, and may need to be created after we reveive the rest of the data.)
 
-### Delete API/user/card?userId="userId" cardId="_id"
-  Deletes specific card from database.
+### DELETE: api/user/:userId/card
 
-Request:
+  This route will delete all of the cards that the user currently has. It will remove them from the database and will also remove them from the AWS S3 bucket.
+  
+#### Request:
+  
+  ```https://businesstime.herokuapp.com/api/user/123/card```
 
-```
-{
-"userId":"1234"
-"cardId" : "<_id>"
-}
-```
+  No other data is needed as this will automatically delete all the user's cards and remove them from the S3 Bucket and from the database.
 
-Response: Return status 200 and updated user object.
+#### Response:
+
+ Attached to the response object will be two useful properties: ```res.text & res.user```.
+  
+ - The ```res.text``` will return a status both a status code and a message. On success it will look like this:
+   ```
+      201
+      Success. All of the user's cards have been removed from the database and removed from the AWS S3 bucket.
+   ```
+ - The ```res.user``` will return an instance of the user that has been updated. It should now have ```user.cards === []``` The rest of the object will resemble the modeled user data listed in the models section.
+
+
+### DELETE: api/user/:userId/card/:cardId
+
+  This route will delete a specific card from the database and from the S3 bucket. It will also update ```user.cards``` to reflect the specified card having been removed.
+
+#### Request:
+  ```https://businesstime.herokuapp.com/api/user/123/card/102949```
+
+  No other parameters are required as this will automaticall delete the card from the database, remove it from the S3 bucket, and update ```user.cards``` to refelct the card having been removed.
+
+#### Response: 
+
+
 
 ### Put API/user/card?userId="userId" cardId="_id"
 
