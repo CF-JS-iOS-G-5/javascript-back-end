@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const User = require('./user');
-const Gallery = require('./gallery');
 
 const cardSchema = Schema({
   name: {type: String, required: true},
@@ -20,21 +19,21 @@ const cardSchema = Schema({
 
 const Card = module.exports = mongoose.model('card', cardSchema);
 
-Card.findByIdAndAddGallery = function(id, gallery) {
+Card.findByIdAndAddUser = function(id, user) {
   return Card.findbyId(id)
-  .then(gal => {
-    console.log(gal);
-    gallery.cardId = gal._id;
-    this.galCards = gal;
-    return new Gallery(gal).save();
+  .then(person => {
+    console.log(person);
+    user.cardId = person._id;
+    this.userCards = person;
+    return new User(user).save();
   })
-  .then(gal => {
-    this.galCards.aGallery.push(gal._id);
-    this.tempUser = gal;
-    return this.galCards.save();
+  .then(user => {
+    this.userCards.aUser.push(user._id);
+    this.tempUser = user;
+    return this.userCards.save();
   })
   .then(() => {
-    this.tempGal;
+    this.tempUser;
   })
   .catch(err => Promise.reject(err));
 };
