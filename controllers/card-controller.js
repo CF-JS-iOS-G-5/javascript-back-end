@@ -40,7 +40,50 @@ exports.createCard = function(req, res) {
   .then(s3Data => {
     del([`${dataDir}/*`]);
     let imageData = {
-      name:
+      name: req.body.name,
+      desc: req.body.desc,
+      userId: req.user._id,
+      imageURI: s3Data.Location,
+      objectKey: s3Data.Key,
+    };
+    return new Card(imageData).save();
+  });
+};
+
+exports.fetchCard = function(req){
+  debug('#fetchCard');
+  return Card.findbyId(req.params.id)
+  .then(card => {
+    if (card.userId.toString() !== req.user._id.toString()){
+      return Promise.reject(createError(401, 'Invalid User'));
     }
+    return Promise.resolve(card);
   })
+  .catch(() => Promise.reject(createError(404, 'Card not found'))
+);
+};
+
+exports.deleteCard = function (req) {
+  debug('#deleteCard');
+  let params = {};
+  return Card.findbyId(req.params.userId)
+  .then(card => {
+    if(card.userId.toString() !== req.params.id.toString()){
+      return Promise.reject(createError(401, 'Card not associated with user' ));
+    }
+
+    if (card.userId.toString() !== req.user._id.toString()){
+      return Promise.reject(createError(401, 'Invalid User'));
+    }
+    params = {
+      Bucket: process.env.AWS_BUCKET,
+      Key: card.ObjectKey,
+    };
+  })
+  .then(() => s3.deleteObject(params))
+  .then(data => {
+    console.log(data);
+    return Card.findByIdAndRemove(req.params.imageURI);
+  })
+  .catch(err => Promise.reject(createError(404, err.message)));
 };
