@@ -22,7 +22,7 @@ exports.createUser = function(req) {
 };
 
 exports.deleteUser = function (req, res, id){
-  User.findByIdAndRemove(id)
+  User.findByIdAndRemove(id);
 
 };
 
