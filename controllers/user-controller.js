@@ -9,7 +9,7 @@ module.exports = exports = {};
 exports.createUser = function(req) {
   debug('#createUser');
   return User.findOne({iToken : req.body.iToken})
-  .then(user => { //check user exists on bad token
+  .then(user => {
     console.log('create user', user);
     if(!user){
       return new User(req.body).save()
@@ -21,13 +21,19 @@ exports.createUser = function(req) {
   .catch(err => createError(404, err.message));
 };
 
-exports.deleteUser = function (req, res, id){
-  User.findByIdAndRemove(id)
-
+exports.fetchUser = function(req){
+  return User.findOne({iToken : req.params.iToken})
+  .then(user => {
+    return user;
+  })
+  .catch(err => createError(404, err.message));
 };
 
-exports.fetchUser = function(id, res){
-  User.findById(id)
-  .then(user => res.json(user))
-  .catch(err => res.status(err.status).send(err.message));
+exports.deleteUser = function (req){
+  console.log('here', req.params.iToken);
+  return User.findOne({iToken : req.params.iToken})
+  .then(user =>{
+    console.log('user here',user);
+    return User.findByIdAndRemove(user.id);
+  });
 };
