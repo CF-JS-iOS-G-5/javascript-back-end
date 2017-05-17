@@ -15,6 +15,7 @@ const cardSchema = Schema({
   skills: {type: Array, required: true},
   imageURI: {type: String, required: true, unique: true},
   userId: {type: Schema.Types.ObjectId, required: true},
+  cardId: {type: String, required: true, unique: true},
 });
 
 const Card = module.exports = mongoose.model('card', cardSchema);
