@@ -12,23 +12,17 @@ require('../server');
 const url = 'https://business-time-test.herokuapp.com/api/user';
 
 const testUser = {
-  iToken : '123bc',
+  iToken : 'testToken',
 };
 
 describe('User routes', function(){
   describe('POST signup route', function(){
     describe('post with valid inputs', function(){
-      after(done => {
-        User.remove({})
-        .then(()=> done())
-        .catch(done);
-      });
       it('should respond with new user', done =>{
         request.post(`${url}`)
        .send(testUser)
        .end((err, res) =>{
-         console.log(res.status);
-         expect(res.status).to.equal(200);
+         expect(res.body.iToken).to.equal('testToken');
          done();
        });
       });
@@ -48,29 +42,26 @@ describe('User routes', function(){
          done();
        });
       });
-    })
+    });
   });
 
   describe('GET signin route', function(){
     it('should respond with existing user on valid request', done =>{
-      server.get(`${url}/api/signin/`)
-     .send('123456')
+      request.get(`${url}/testToken`)
      .end((err, res) =>{
-       expect(res.id).to.equal('123456');
-       expect(res.name).to.equal('Patrick Sheridan');
+       expect(res.body.iToken).to.equal('testToken');
        done();
      });
     });
     it('should respond with 400 on bad route', done =>{
-      server.get(`${url}/api/hotdogs`)
+      request.get(`${url}/notRight/not`)
      .end((err, res) =>{
-       expect(res.status).to.equal(400);
+       expect(res.status).to.equal(404);
        done();
      });
     });
     it('should respond with 200 on valid route', done =>{
-      server.get(`${url}/api/signin/`)
-     .send('123456')
+      request.get(`${url}/testToken`)
      .end((err, res) =>{
        expect(res.status).to.equal(200);
        done();
@@ -78,44 +69,17 @@ describe('User routes', function(){
     });
   });
   describe('DELETE user route', function(){
-    it('should respond with 400 on bad route', done =>{
-      server.delete(`${url}/api/ninjaturtles`)
-     .end((err, res) =>{
-       expect(res.status).to.equal(400);
-       done();
-     });
-    });
-    it('should respond with 200 on valid route', done =>{
-      server.delete(`${url}/api/user/`)
-     .send('123456')
+    it('should respond with 204 on bad route', done =>{
+      request.delete(`${url}/testToken`)
      .end((err, res) =>{
        expect(res.status).to.equal(204);
        done();
      });
     });
-  });
-  describe('PUT user route', function(){
-    it('should respond with updated user', done =>{
-      server.put(`${url}/api/user/123456`)
-     .send( 'name', 'Bo Jangles')
+    it('should respond with 404 on valid route', done =>{
+      request.delete(`${url}/badRoute/what`)
      .end((err, res) =>{
-       expect(res.id).to.equal('123456');
-       expect(res.name).to.equal('Patrick Sheridan');
-       done();
-     });
-    });
-    it('should respond with 400 on bad route', done =>{
-      server.put(`${url}/api/llamas`)
-     .end((err, res) =>{
-       expect(res.status).to.equal(400);
-       done();
-     });
-    });
-    it('should respond with 200 on valid route', done =>{
-      server.put(`${url}/api/user/123456`)
-     .send( 'name', 'Bo Jangles')
-     .end((err, res) =>{
-       expect(res.status).to.equal(200);
+       expect(res.status).to.equal(404);
        done();
      });
     });
