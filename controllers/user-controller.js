@@ -6,16 +6,11 @@ const createError = require('http-errors');
 
 module.exports = exports = {};
 
-exports.createUser = function(req) {
+exports.createUser = function(req,res) {
   debug('#createUser');
-
-  let tempToken = null;
-  tempToken= req.body.iToken;
-  req.body.iToken = null;
-  delete req.body.iToken;
-
-  let newUser = new User(req.body);
-  return newUser.generateiTokenHash(tempToken)
-  .then(user => user.save())
-  .catch(err => createError(401, err.message));
+  new User(req.body).save()
+  .then(user => {
+    res.json(user);
+  })
+  .catch(err => res.status(400).send(err.message));
 };
