@@ -48,7 +48,7 @@ describe('User routes', function(){
          done();
        });
       });
-    })
+    });
   });
 
   describe('GET signin route', function(){

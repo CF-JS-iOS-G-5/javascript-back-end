@@ -14,22 +14,20 @@ module.exports = function(router){
     .catch(err => res.status(err.status).send(err.message));
   });
 
-  router.delete('/user/:id', (req, res) =>{
-    debug('#DELETE /api/user/:userId');
-    console.log(`This is the req.params inside of user-routes DELETE route ${req.params}`);
-
-    userController.deleteUser(req, res, req.params.id)
-    .then(()=> res.status(204).send())
-    .catch(err => res.status(err.status).send(err.message));
-
-  });
-
-  router.get('/user/:id', (req, res)=>{
-    debug('#GET /api/user/:userId');
-    userController.fetchUser(req.params.id, res)
+  router.get('/user/:iToken', (req, res)=>{
+    debug('#GET /api/user/:iToken');
+    userController.fetchUser(req, req.params)
     .then(user => res.json(user))
     .catch(err => res.status(err.status).send(err.message));
   });
+
+  router.delete('/user/:iToken', (req, res) =>{
+    debug('#DELETE /api/user/:userId');
+    userController.deleteUser(req, req.params)
+    .then(() => res.status(204).send())
+      .catch(err => res.status(err.status).send(err.message));
+  });
+
 
   return router;
   // end of module exports
