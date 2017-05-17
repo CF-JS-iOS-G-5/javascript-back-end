@@ -2,7 +2,7 @@
 
 const User = require('../models/user');
 const debug = require('debug')('bizapp:user-controller');
-const createError = require('http-errors');
+// const createError = require('http-errors');
 
 module.exports = exports = {};
 
