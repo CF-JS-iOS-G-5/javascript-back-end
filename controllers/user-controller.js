@@ -27,6 +27,7 @@ exports.fetchUser = function(req){
     return user;
   })
   .catch(err => createError(404, err.message));
+
 };
 
 exports.deleteUser = function (req){
