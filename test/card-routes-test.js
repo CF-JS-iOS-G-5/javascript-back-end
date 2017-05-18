@@ -10,7 +10,7 @@ const expect= require('chai').expect;
 
 mongoose.Promise = Promise;
 
-// const server = require('../server');
+require('../server');
 const url = 'https://business-time-test.herokuapp.com/api/user';
 
 const testUser = {

@@ -25,7 +25,6 @@ User.findByIdAndAddCard = function(id, card) {
     return this.tempUser.save();
   })
   .then(() =>{
-    console.log('Fuck why wont you work',this.tempCard);
     return this.tempCard;
   });
 };
