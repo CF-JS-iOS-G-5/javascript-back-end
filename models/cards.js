@@ -13,7 +13,7 @@ const cardSchema = Schema({
   // websites: {type: String, max: 200},
   // skills: {type: Array, required: true},
   // imageURI: {type: String, required: true, unique: true},
-  userId: [{type: Schema.Types.ObjectId, required: true}],
+  userId: {type: Schema.Types.ObjectId, ref: 'user', required: true},
   picData: {type: String, required: true},
 
 });
