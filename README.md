@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/CF-JS-iOS-G-5/javascript-back-end.svg?branch=master)](https://travis-ci.org/CF-JS-iOS-G-5/javascript-back-end)
 # Business Time - Backend Docs <a name="top"></a>
 
 ### Group Members
