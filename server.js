@@ -13,7 +13,7 @@ const app = module.exports = express();
 const router = express.Router();
 const userRoutes = require('./routes/user-routes')(router);
 // const cardRoutes = require('./routes/card-routes')(router);
-// const muRoutes = require('./routes/muapi-routes')(router);
+const muRoutes = require('./routes/muapi-routes')(router);
 
 const PORT = process.env.PORT || 3000;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/bizapp';
@@ -27,7 +27,7 @@ app.use(bodyParser);
 
 app.use('/api', userRoutes);
 // app.use('/api', cardRoutes);
-// app.use('/api', muRoutes);
+app.use('/api', muRoutes);
 
 
 
