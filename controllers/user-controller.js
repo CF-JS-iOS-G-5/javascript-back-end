@@ -10,7 +10,6 @@ exports.createUser = function(req) {
   debug('#createUser');
   return User.findOne({iToken : req.body.iToken})
   .then(user => {
-    console.log('create user', user);
     if(!user){
       return new User(req.body).save()
       .then(user => user)
