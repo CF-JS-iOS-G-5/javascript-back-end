@@ -22,6 +22,11 @@ module.exports = function(router){
     .catch(err => res.status(404).send(err.message));
   });
 
+  router.delete('/user/:userId/card/:cardId', (req, res)=>{
+    cardController.deleteCard(req.params.userId, req.params.cardId)
+    .then(err => res.status(204).send(err.message))
+    .catch(err => res.status(err.status).send(err.message));
+  })
 
 
   return router;

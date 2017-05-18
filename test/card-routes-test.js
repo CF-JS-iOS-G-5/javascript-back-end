@@ -10,9 +10,12 @@ const expect= require('chai').expect;
 
 mongoose.Promise = Promise;
 
+
 // const server = require('../server');
 const userUrl = 'https://business-time-test.herokuapp.com/api/user';
 const cardUrl = 'https://business-time-test.herokuapp.com/api/user/:userId/card';
+
+
 
 const testUser = {
   iToken : 'testToken',

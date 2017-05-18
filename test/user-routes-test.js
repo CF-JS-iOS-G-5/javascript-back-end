@@ -4,11 +4,10 @@ const expect= require('chai').expect;
 const request = require('superagent');
 const mongoose = require('mongoose');
 const Promise = require('bluebird');
-const User = require('../models/user');
 
 mongoose.Promise = Promise;
 
-require('../server');
+// require('../server');
 const url = 'https://business-time-test.herokuapp.com/api/user';
 
 const testingUser = {
