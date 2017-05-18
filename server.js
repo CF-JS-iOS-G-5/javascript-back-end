@@ -12,7 +12,7 @@ const mongoose = require('mongoose');
 const app = module.exports = express();
 const router = express.Router();
 const userRoutes = require('./routes/user-routes')(router);
-// const cardRoutes = require('./routes/card-routes')(router);
+const cardRoutes = require('./routes/card-routes')(router);
 const muRoutes = require('./routes/muapi-routes')(router);
 
 const PORT = process.env.PORT || 3000;
@@ -26,7 +26,7 @@ app.use(errorHandler);
 app.use(bodyParser);
 
 app.use('/api', userRoutes);
-// app.use('/api', cardRoutes);
+app.use('/api', cardRoutes);
 app.use('/api', muRoutes);
 
 
