@@ -10,7 +10,7 @@ mongoose.Promise = Promise;
 // require('../server');
 const url = 'https://business-time-test.herokuapp.com/api/user';
 
-const testUser = {
+const testingUser = {
   iToken : 'testToken',
 };
 
@@ -19,7 +19,7 @@ describe('User routes', function(){
     describe('post with valid inputs', function(){
       it('should respond with new user', done =>{
         request.post(`${url}`)
-       .send(testUser)
+       .send(testingUser)
        .end((err, res) =>{
          expect(res.body.iToken).to.equal('testToken');
          done();
@@ -27,7 +27,7 @@ describe('User routes', function(){
       });
       it('should respond with 400 on bad route', done =>{
         request.post(`${url}/tacos`)
-       .send(testUser)
+       .send(testingUser)
        .end((err, res) =>{
          expect(res.status).to.equal(404);
          done();
@@ -35,7 +35,7 @@ describe('User routes', function(){
       });
       it('should respond with 200 on valid route', done =>{
         request.post(`${url}`)
-       .send(testUser)
+       .send(testingUser)
        .end((err, res) =>{
          expect(res.status).to.equal(200);
          done();
