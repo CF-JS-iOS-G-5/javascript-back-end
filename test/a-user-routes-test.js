@@ -33,7 +33,7 @@ describe('User routes', function(){
          done();
        });
       });
-    
+
       it('should respond with 200 on valid route', done =>{
         request.post(`${url}/api/user`)
        .send(testingUser)
@@ -61,7 +61,7 @@ describe('User routes', function(){
        done();
      });
     });
-    it('should respond with 400 on bad route', done =>{
+    it('should respond with 404 on bad route', done =>{
       request.get(`${url}/notRight/not`)
      .end((err, res) =>{
        expect(res.status).to.equal(404);
