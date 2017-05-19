@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/CF-JS-iOS-G-5/javascript-back-end.svg?branch=master)](https://travis-ci.org/CF-JS-iOS-G-5/javascript-back-end)
-[![Coverage Status](https://coveralls.io/repos/github/CF-JS-iOS-G-5/javascript-back-end/badge.svg?branch=master)](https://coveralls.io/github/CF-JS-iOS-G-5/javascript-back-end?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/CF-JS-iOS-G-5/javascript-back-end/badge.svg?branch=herokutest)](https://coveralls.io/github/CF-JS-iOS-G-5/javascript-back-end?branch=herokutest)
 # Business Time - Backend Docs <a name="top"></a>
 
 ### Group Members
