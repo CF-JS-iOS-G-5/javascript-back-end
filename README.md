@@ -174,16 +174,13 @@ The response will be a ```res.status 204  Success.``` The user and their cards h
 
 #### Response:
 
- Attached to the response object will be three useful properties:  ```res.user```, and ``` res.card```.
-
- - The ```res.user``` will be an instance of the user that has been updated with the new Card added to ```user.cards``` It will resemble the modeled user data listed in the models section.
- - the ```res.card``` will be an instance of the card that was just made. It is equivalant to ```user.card[indexOfNewCard]```.
+The response will be the instance of the Card created.
 
 
 
 ### DELETE: api/user/:userId/card
 
-  This route will delete all of the cards that the user currently has. It will remove them from the database and will also remove them from the AWS S3 bucket.
+  This route will delete all of the cards that the user currently has. It will remove them from the database.
 
 #### Request:
 
@@ -191,7 +188,7 @@ The response will be a ```res.status 204  Success.``` The user and their cards h
   https://businesstime.herokuapp.com/api/user/123/card
   ```
 
-  No other data is needed as this will automatically delete all the user's cards and remove them from the S3 Bucket and from the database.
+  No other data is needed as this will automatically delete all the user's cards.
 
 #### Response:
 
@@ -203,14 +200,14 @@ The response will be a ```res.status 204  Success.``` The user and their cards h
 
 ### DELETE: api/user/:userId/card/:cardId
 
-  This route will delete a specific card from the database and from the S3 bucket. It will also update ```user.cards``` to reflect the specified card having been removed.
+  This route will delete a specific card from the database. It will also update ```user.cards``` to reflect the specified card having been removed.
 
 #### Request:
   ```
   https://businesstime.herokuapp.com/api/user/123/card/102949
   ```
 
-  No other parameters are required as this will automatically delete the card from the database, remove it from the S3 bucket, and update ```user.cards``` to refelect the card having been removed.
+  No other parameters are required as this will automatically delete the card from the database and update ```user.cards``` to reflect the card having been removed.
 
 #### Response:
 
