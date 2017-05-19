@@ -9,7 +9,6 @@ module.exports = function(router){
     debug('#post api/user');
     userController.createUser(req)
     .then(user => {
-      console.log('We fucked up', user);
       res.json(user);
     })
     .catch(err => res.status(err.status).send(err.message));

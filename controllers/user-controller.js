@@ -30,10 +30,8 @@ exports.fetchUser = function(req){
 };
 
 exports.deleteUser = function (req){
-  console.log('here', req.params.iToken);
   return User.findOne({iToken : req.params.iToken})
   .then(user =>{
-    console.log('user here',user);
     return User.findByIdAndRemove(user.id);
   });
 };

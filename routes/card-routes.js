@@ -16,7 +16,6 @@ module.exports = function(router){
   router.get('/user/:userId/card', (req, res)=>{
     cardController.fetchAllCards(req.params.userId)
     .then(cards =>{
-      console.log('working', cards);
       res.json(cards);
     })
     .catch(err => res.status(404).send(err.message));
@@ -26,7 +25,7 @@ module.exports = function(router){
     cardController.deleteCard(req.params.userId, req.params.cardId)
     .then(err => res.status(204).send(err.message))
     .catch(err => res.status(err.status).send(err.message));
-  })
+  });
 
 
   return router;
