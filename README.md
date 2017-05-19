@@ -58,7 +58,7 @@ This is an example of a User object in our database:<br>
 
   ```_id```     refers to this card's unique id.
   ```__v``` refers to the version of the Card in the database.
-  ```picData``` refers to the binary string of stored image data for the card.
+  ```picData``` refers to the JSON string of stored image data for the card.
   ```userId```  refers to the userId property of the user that made this card. This is what links a card to a user.
 
   This is an example of a Card in our database:
@@ -66,7 +66,7 @@ This is an example of a User object in our database:<br>
   {
     "_id" : "<card Id>",
     "__v": 1.00,
-    "picData" : "<compressed string of binary data of a picture>",
+    "picData" : "<JSON data string of a picture>",
     "userId" : "[{schema.objectId, ref: 'card'}]",
   }
   ```
@@ -148,7 +148,7 @@ https://businesstime.herokuapp.com/api/user/123
 
 #### Response:
 
-The response will be a res.status 204  Success. The user and their cards have been deleted from the database.
+The response will be a ```res.status 204  Success.``` The user and their cards have been deleted from the database.
 
 ---
 
@@ -156,46 +156,30 @@ The response will be a res.status 204  Success. The user and their cards have be
 
 ### POST: api/user/:userId/card
 
-  This route will create a new Card and will store the JPG image of the Card in the AWS S3 bucket.
-  - ### IMPORTANT: this will also automatically update ```user.cards``` by pushing ```_id``` into the array.
+  This route will create a new Card and store the JSON string of the Card in the database.
+  - #### IMPORTANT: this will also automatically update ```user.cards``` by pushing ```_id``` into the array.
 
 #### Request:
 
-  ```https://businesstime.herokuapp.com/api/user/123/card```
+  ```
+  https://businesstime.herokuapp.com/api/user/123/card
+  ```
 
-  This is what the ```request.body``` would look like. The only required properties are ```_id```,```cardJPG```, and ```userId```. **** see note on bottom.
+  This is what the ```request.body``` would look like. The only required property is ```picData```.
 ```
 {
-  _id : "<card Id>",
-  "cardJpg" : "<string of .jpg route>",
-  "userId" : "[{schema.objectId, ref: 'card'}]",
-  "name" : "Kevith Baclon",
-  "phoneNumber" : "555-867-5309",
-  "email" : "business@biz.biz",
-  "jobTitle" : "Rodeo Clown",
-  "company" : "Amazon",
-  "websites" : "[pleasegivemeajobmicrosoft.com]",
-  "skills" : "['space marine','javascript', 'CSS']",
+  "picData" : "<JSON string of card image>",
 }
 ```
 
-*_id, "cardJpg" and "userId" are required.
-
 #### Response:
 
- Attached to the response object will be three useful properties: ```res.text```, ```res.user```, and ``` res.card```.
+ Attached to the response object will be three useful properties:  ```res.user```, and ``` res.card```.
 
- - The ```res.text``` will have a status code and a message. On success it will look like this:
-   ```
-      201
-      Success. The Card has been added to the database.
-   ```
  - The ```res.user``` will be an instance of the user that has been updated with the new Card added to ```user.cards``` It will resemble the modeled user data listed in the models section.
  - the ```res.card``` will be an instance of the card that was just made. It is equivalant to ```user.card[indexOfNewCard]```.
 
 
-
-**** ( DEVNOTE * these may not actually be required, and may need to be created after we reveive the rest of the data.)
 
 ### DELETE: api/user/:userId/card
 
@@ -203,19 +187,17 @@ The response will be a res.status 204  Success. The user and their cards have be
 
 #### Request:
 
-  ```https://businesstime.herokuapp.com/api/user/123/card```
+  ```
+  https://businesstime.herokuapp.com/api/user/123/card
+  ```
 
   No other data is needed as this will automatically delete all the user's cards and remove them from the S3 Bucket and from the database.
 
 #### Response:
 
- Attached to the response object will be two useful properties: ```res.text & res.user```.
+ Attached to the response object will be two useful properties: ``` res.user```.
 
- - The ```res.text``` will have a status code and a message. On success it will look like this:
-   ```
-      201
-      Success. All of the user's cards have been removed from the database and removed from the AWS S3 bucket.
-   ```
+
  - The ```res.user``` will be an instance of the user that has been updated. It should now have ```user.cards === []``` The rest of the object will resemble the modeled user data listed in the models section.
 
 
@@ -224,7 +206,9 @@ The response will be a res.status 204  Success. The user and their cards have be
   This route will delete a specific card from the database and from the S3 bucket. It will also update ```user.cards``` to reflect the specified card having been removed.
 
 #### Request:
-  ```https://businesstime.herokuapp.com/api/user/123/card/102949```
+  ```
+  https://businesstime.herokuapp.com/api/user/123/card/102949
+  ```
 
   No other parameters are required as this will automatically delete the card from the database, remove it from the S3 bucket, and update ```user.cards``` to refelect the card having been removed.
 
@@ -232,11 +216,7 @@ The response will be a res.status 204  Success. The user and their cards have be
 
   Attached to the response object will be two useful properties: ```res.text & res.user```.
 
- - The ```res.text``` will have a status code and a message. On success it will look like this:
-   ```
-      201
-      Success. The specific card has been removed from the database, the AWS S3 bucket, and user.cards has been updated.
-   ```
+
  - The ```res.user``` will be an instance of the user that has been updated. ```user.cards``` should no longer include the specific card. The rest of the object will resemble the modeled user data listed in the models section.
 
 ### PUT: api/user/:userId/card/:cardId
@@ -245,30 +225,21 @@ The response will be a res.status 204  Success. The user and their cards have be
 
 #### Request:
 
-  ```https://businesstime.herokuapp.com/api/user/123/card/102949```
+  ```
+  https://businesstime.herokuapp.com/api/user/123/card/102949
+  ```
 
  The request.body should look similar to this:
 ```
 {
   "cardJpg" : "<string of .jpg route>",
-  "name" : "Kevin Bacon",
-  "phoneNumber" : "425-555-5309",
-  "email" : "business@biznes.biz",
-  "jobTitle" : "Circus Clown",
-  "company" : "Amazonia",
-  "websites" : "[]",
-  "skills" : "['space marine','javascript', 'CSS']",
 }
 ```
 #### Response:
 
- Attached to the response object will be three useful properties: ```res.text```, ```res.user```, and ``` res.card```.
+ Attached to the response object will be three useful properties: ```res.user```, and ``` res.card```.
 
- - The ```res.text``` will have a status code and a message. On success it will look like this:
-   ```
-      201
-      Success. The Card has been update.
-   ```
+
  - The ```res.user``` will be an instance of the user. Note, this route does NOT update the user property as no card has been added or removed from ```user.cards```. Only the _Card_ that ```user.cards[indexOfUpdatedCard]``` **_references_** will change. The rest of the User object will resemble the modeled user data listed in the models section.
  - the ```res.card``` will be an instance of the card that was just updated. It is equivalant to ```user.card[indexOfUpdatedCard]```.
 
@@ -283,7 +254,9 @@ The response will be a res.status 204  Success. The user and their cards have be
   This route will get all of the meetup events that match the specified programming language. This looks at 30 mile radius around Seattle, WA.
 
 
-  This route will hit the ```https://api.meetup.com/find/events``` route on the MUAPI. For more info on the ```/find/events``` route on the MUAPI docs click [here](https://secure.meetup.com/meetup_api/console/?path=%2Ffind%2Fevents).
+  This route will hit the ```
+  https://api.meetup.com/find/events
+  ``` route on the MUAPI. For more info on the ```/find/events``` route on the MUAPI docs click [here](https://secure.meetup.com/meetup_api/console/?path=%2Ffind%2Fevents).
 
   The value of the "text" key should be the name of a programming language.
 
