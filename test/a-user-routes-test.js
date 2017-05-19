@@ -21,7 +21,6 @@ describe('User routes', function(){
         request.post(`${url}/api/user`)
        .send(testingUser)
        .end((err, res) =>{
-         console.log(res.body);
          expect(res.body.iToken).to.equal('testToken');
          done();
        });
@@ -34,11 +33,20 @@ describe('User routes', function(){
          done();
        });
       });
+    
       it('should respond with 200 on valid route', done =>{
         request.post(`${url}/api/user`)
        .send(testingUser)
        .end((err, res) =>{
          expect(res.status).to.equal(200);
+         done();
+       });
+      });
+      it('should respond with 200 on valid route', done =>{
+        request.post(`${url}/api/user`)
+       .send(testingUser)
+       .end((err, res) =>{
+         expect(res.body.cardId).to.not.be.empty;
          done();
        });
       });

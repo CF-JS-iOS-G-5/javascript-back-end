@@ -5,7 +5,7 @@ require('dotenv').load();
 const express = require('express');
 const cors = require('cors');
 const Promise = require('bluebird');
-const errorHandler = require('./lib/error-middleware');
+// const errorHandler = require('./lib/error-middleware');
 const bodyParser = require('body-parser').json();
 const mongoose = require('mongoose');
 
@@ -22,7 +22,7 @@ mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
 
 app.use(cors());
-app.use(errorHandler);
+// app.use(errorHandler);
 app.use(bodyParser);
 
 app.use('/api', userRoutes);
