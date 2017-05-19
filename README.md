@@ -177,7 +177,6 @@ The response will be a ```res.status 204  Success.``` The user and their cards h
 The response will be the instance of the Card created.
 
 
-
 ### DELETE: api/user/:userId/card
 
   This route will delete all of the cards that the user currently has. It will remove them from the database.
@@ -192,11 +191,7 @@ The response will be the instance of the Card created.
 
 #### Response:
 
- Attached to the response object will be two useful properties: ``` res.user```.
-
-
- - The ```res.user``` will be an instance of the user that has been updated. It should now have ```user.cards === []``` The rest of the object will resemble the modeled user data listed in the models section.
-
+  The response will be a ```res.status 204  Success.``` The users cards have been deleted.
 
 ### DELETE: api/user/:userId/card/:cardId
 
@@ -211,34 +206,7 @@ The response will be the instance of the Card created.
 
 #### Response:
 
-  Attached to the response object will be two useful properties: ```res.text & res.user```.
-
-
- - The ```res.user``` will be an instance of the user that has been updated. ```user.cards``` should no longer include the specific card. The rest of the object will resemble the modeled user data listed in the models section.
-
-### PUT: api/user/:userId/card/:cardId
-
-  This route will allow a user to update a card. Cannot update ```_id``` and ```userId```.
-
-#### Request:
-
-  ```
-  https://businesstime.herokuapp.com/api/user/123/card/102949
-  ```
-
- The request.body should look similar to this:
-```
-{
-  "cardJpg" : "<string of .jpg route>",
-}
-```
-#### Response:
-
- Attached to the response object will be three useful properties: ```res.user```, and ``` res.card```.
-
-
- - The ```res.user``` will be an instance of the user. Note, this route does NOT update the user property as no card has been added or removed from ```user.cards```. Only the _Card_ that ```user.cards[indexOfUpdatedCard]``` **_references_** will change. The rest of the User object will resemble the modeled user data listed in the models section.
- - the ```res.card``` will be an instance of the card that was just updated. It is equivalant to ```user.card[indexOfUpdatedCard]```.
+The response will be a ```res.status 204  Success.``` The Card has been deleted.
 
  ---
 
@@ -261,7 +229,7 @@ The response will be the instance of the Card created.
 
   ```https://businesstime.herokuapp.com/api/meetup/events?text="python"```
 
-  Additional paramaters may be added to refine the search.
+  Additional parameters may be added to refine the search.
 
 #### Response:
 
