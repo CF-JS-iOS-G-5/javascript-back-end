@@ -2,7 +2,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/CF-JS-iOS-G-5/javascript-back-end/badge.svg?branch=herokutest)](https://coveralls.io/github/CF-JS-iOS-G-5/javascript-back-end?branch=herokutest)
 # Business Time - Backend Docs <a name="top"></a>
 
-
+Just a test for CI.
 ### Group Members
   [Michael Treat](https://github.com/michaeltreat)<br>
   [Isak Swearingen](https://github.com/renegadellama)<br>
